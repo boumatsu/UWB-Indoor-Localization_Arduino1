@@ -45,7 +45,7 @@ uint8_t configOption = 1;
 uint8_t channel = 1;
 uint8_t pulseFrequency = DW1000.TX_PULSE_FREQ_16MHZ;
 uint8_t dataRate = DW1000.TRX_RATE_6800KBPS;
-uint8_t preambleLength = DW1000.TX_PREAMBLE_LEN_128;
+uint8_t preambleLength = DW1000.TX_PREAMBLE_LEN_64;
 
 // ===== TEST STATE MANAGEMENT =====
 enum TestMode {
@@ -644,7 +644,7 @@ void initializeDirectMode() {
     DW1000.setChannel(channel);
     uint16_t antennaDelay = getAntennaDelayForChannel(channel);
     DW1000.setAntennaDelay(antennaDelay);
-    byte customMode[3] = { DW1000.TRX_RATE_6800KBPS, DW1000.TX_PULSE_FREQ_16MHZ, DW1000.TX_PREAMBLE_LEN_128 };
+    byte customMode[3] = { DW1000.TRX_RATE_6800KBPS, DW1000.TX_PULSE_FREQ_16MHZ, DW1000.TX_PREAMBLE_LEN_64 };
     DW1000.enableMode(customMode);
     DW1000.commitConfiguration();
     usingRangingLayer = false;

@@ -1149,19 +1149,22 @@ void DW1000Class::setDataRate(byte rate) {
 		setBit(_syscfg, LEN_SYS_CFG, RXM110K_BIT, false);
 	}
 	// SFD mode and type (non-configurable, as in Table )
-	if(rate == TRX_RATE_6800KBPS) {
-		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, false);
-		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, false);
-		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, false);
-	} else if (rate == TRX_RATE_850KBPS) {
-		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
-		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, true);
-		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, true);
-	} else {
-		setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
-		setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, false);
-		setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, false);
-	}
+        if(rate == TRX_RATE_6800KBPS) {
+                // 6.8 Mbps uses a non-standard 8-symbol SFD sequence.
+                // Both transmitter and receiver must enable the non-standard SFD
+                // bits so the user-defined sequence length applies on both ends.
+                setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, false);
+                setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, true);
+                setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, true);
+        } else if (rate == TRX_RATE_850KBPS) {
+                setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
+                setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, true);
+                setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, true);
+        } else {
+                setBit(_chanctrl, LEN_CHAN_CTRL, DWSFD_BIT, true);
+                setBit(_chanctrl, LEN_CHAN_CTRL, TNSSFD_BIT, false);
+                setBit(_chanctrl, LEN_CHAN_CTRL, RNSSFD_BIT, false);
+        }
 	byte sfdLength;
 	if(rate == TRX_RATE_6800KBPS) {
 		sfdLength = 0x08;
