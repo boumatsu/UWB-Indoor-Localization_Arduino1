@@ -45,11 +45,11 @@ U8G2_SH1106_128X64_NONAME_1_HW_I2C display(U8G2_R0, U8X8_PIN_NONE);  // page-buf
 uint8_t configOption = 0;  // Set this to select configuration mode (0-6)
 
 // Manual configuration settings (only used when configOption = 0)
-// UPDATED: Changed to 16MHz PRF, 6800kbps, 64 preamble
+// UPDATED: 16MHz PRF, 6800kbps, 64 preamble for low-power operation
 uint8_t manualChannel = 5;
 uint8_t manualPulseFrequency = DW1000.TX_PULSE_FREQ_16MHZ;
 uint8_t manualDataRate = DW1000.TRX_RATE_6800KBPS;
-uint8_t manualPreambleLength = DW1000.TX_PREAMBLE_LEN_128;
+uint8_t manualPreambleLength = DW1000.TX_PREAMBLE_LEN_64;
 
 // Variables that will hold the active configuration
 uint8_t channel;
@@ -138,7 +138,7 @@ void setup()
     // Preset configurations - UPDATED to 16MHz PRF, 6800kbps, 64 preamble
     pulseFrequency = DW1000.TX_PULSE_FREQ_16MHZ;
     dataRate = DW1000.TRX_RATE_6800KBPS;
-    preambleLength = DW1000.TX_PREAMBLE_LEN_128;
+    preambleLength = DW1000.TX_PREAMBLE_LEN_64;
     
     // Set channel based on preset selection
     switch (configOption) {
@@ -241,7 +241,7 @@ void applyNewConfiguration() {
     // Preset configurations - UPDATED to 16MHz PRF, 6800kbps, 64 preamble
     pulseFrequency = DW1000.TX_PULSE_FREQ_16MHZ;
     dataRate = DW1000.TRX_RATE_6800KBPS;
-    preambleLength = DW1000.TX_PREAMBLE_LEN_128;
+    preambleLength = DW1000.TX_PREAMBLE_LEN_64;
     
     // Set channel based on preset selection
     switch (configOption) {
